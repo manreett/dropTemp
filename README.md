@@ -10,10 +10,12 @@
 
 ## Requirements
 * LAMP/WAMP server with Node-RED installed.
-* Arduino with the following components:
-  * DHT11
-  * HC-05
-  * OSOYOO ESP8266 WiFi shield
+* Arduino with the following:
+  * Components:
+    * DHT11
+    * HC-05
+    * OSOYOO ESP8266 WiFi shield
+  * DHT sensor library
 * Raspberry Pi with the following packages:
   * python
   * python-pip
@@ -21,8 +23,8 @@
   * bluez-utils
 
 ## Installation
-1. Install packages within `requirements.txt` on the Raspberry Pi.
-2. Place all [server](/Server) files in the corresponding directory for Apache to server to users.
+1. Install packages within [requirements.txt](/Pi.requirements.txt) on the Raspberry Pi.
+2. Place all [server](/Server) `.php` files in the proper directory for Apache to serve.
 3. Create `config.php` within that same directory with the following structure:
 ```php
 return array(
@@ -33,7 +35,7 @@ return array(
 )
 ```
 4. Connect HC-05 and DHT11 to the corresponding pins on the ESP8266.
-5. Upload *PLACEHOLDER* to the Arduino board.
+5. Upload [HC_to_DHT11.ino](/Arduino/HC_to_DHT11.ino) to the Arduino board.
 6. Pair the Raspberry Pi with the HC-05 module using the following commands where X's are your HC-05's MAC address:
 ```
 $ sudo bluetoothctl
@@ -57,7 +59,7 @@ ALTER TABLE `data`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 COMMIT;
 ```
-8. Import Node-RED *PLACEHOLDER* and fill in credentials of your MySQL data table.
+8. Import Node-RED [flow](/Server/flows.json) and fill in credentials of your MySQL data table.
 
 ## Usage
 1. Execute `startRead.sh` on the Raspberry Pi and follow the prompts.
