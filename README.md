@@ -72,3 +72,4 @@ COMMIT;
   * Scale website to scale to amount of unique drops.
 * Provide customizable emails alert functionality.
 * Add opt-in passwords to lock out unauthorized drops.
+* Reduce frequency of BLE connection to reduce power usage of the Arduino.
