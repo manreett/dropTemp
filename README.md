@@ -6,6 +6,7 @@
   * [Requirements](#requirements)
   * [Installation](#installation)
   * [Usage](#usage)
+  * [Potential improvements](#potential-improvements)
 
 
 ## Requirements
@@ -64,3 +65,10 @@ COMMIT;
 ## Usage
 1. Execute `startRead.sh` on the Raspberry Pi and follow the prompts.
 2. View results on your web server using the email you registered with.
+
+## Potential improvements
+* Allow multiple `drops` to connect to a single controller.
+  * Add a UUID to each drop to ensure unique values are posted.
+  * Scale website to scale to amount of unique drops.
+* Provide customizable emails alert functionality.
+* Add opt-in passwords to lock out unauthorized drops.
