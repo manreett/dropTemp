@@ -1,0 +1,143 @@
+[
+    {
+        "id": "63c0ea0e5d8d35fc",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "13f3f615edba3cb0",
+        "type": "http in",
+        "z": "63c0ea0e5d8d35fc",
+        "name": "uploadJSON",
+        "url": "/submit",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 300,
+        "y": 315,
+        "wires": [
+            [
+                "f9169e0ef1cd5d31"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "f9169e0ef1cd5d31",
+        "type": "function",
+        "z": "63c0ea0e5d8d35fc",
+        "name": "parseJSON",
+        "func": "var email = msg.payload.email;\nvar temp = msg.payload.temp;\nvar humid = msg.payload.humid;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 315,
+        "wires": [
+            [
+                "84e244bfcea107b2",
+                "4b6c8a6b18f00a7a"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "84e244bfcea107b2",
+        "type": "http response",
+        "z": "63c0ea0e5d8d35fc",
+        "name": "responseJSON",
+        "statusCode": "",
+        "headers": {},
+        "x": 485,
+        "y": 315,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "0e614845b47bad6c",
+        "type": "mysql",
+        "z": "63c0ea0e5d8d35fc",
+        "mydb": "29d846111c6f39d1",
+        "name": "",
+        "x": 590,
+        "y": 375,
+        "wires": [
+            [
+                "8a5b6233a9841956"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "8a5b6233a9841956",
+        "type": "debug",
+        "z": "63c0ea0e5d8d35fc",
+        "name": "SQL Insert Reponse",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 665,
+        "y": 375,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "4b6c8a6b18f00a7a",
+        "type": "function",
+        "z": "63c0ea0e5d8d35fc",
+        "name": "makeQuery",
+        "func": "var timestamp = new Date().getTime() / 1000;\ntimestamp = timestamp.toString() + \"000\";\ntimestamp = timestamp.substring(0, 14);\n\nvar email = msg.payload.email;\nvar temp = msg.payload.temp;\nvar humid = msg.payload.humid;\n\nvar strQuery = \"INSERT INTO thingData (topic, payload, timestamp, deleted) VALUES ('\" + escape(msg.topic) + \"','\" + escape(msg.payload) + \"','\" + timestamp + \"', 0);\";\nmsg.topic = strQuery;\n\nvar strQuery = \"INSERT INTO data (email, timestamp, temp, humid) VALUE ('\" + email + \"','\" + timestamp + \"','\" + temp + \"','\" + humid + \"');\";\nmsg.topic = strQuery;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 485,
+        "y": 375,
+        "wires": [
+            [
+                "0e614845b47bad6c",
+                "1ba4c4de4157655e"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "1ba4c4de4157655e",
+        "type": "debug",
+        "z": "63c0ea0e5d8d35fc",
+        "name": "SQL Query Debug",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "topic",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 590,
+        "y": 440,
+        "wires": [],
+        "l": false
+    },
+    {
+        "id": "29d846111c6f39d1",
+        "type": "MySQLdatabase",
+        "name": "CHANGE VALUES HERE",
+        "host": "changeme",
+        "port": "changeme",
+        "db": "changeme",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]
